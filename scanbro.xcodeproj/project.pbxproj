@@ -10,9 +10,22 @@
 		85B07AEB2D5040EC0056D8DD /* scanbro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = scanbro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		85B07B5A2D505EF10056D8DD /* Exceptions for "scanbro" folder in "scanbro" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 85B07AEA2D5040EC0056D8DD /* scanbro */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		85B07AED2D5040EC0056D8DD /* scanbro */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				85B07B5A2D505EF10056D8DD /* Exceptions for "scanbro" folder in "scanbro" target */,
+			);
 			path = scanbro;
 			sourceTree = "<group>";
 		};
@@ -255,8 +268,11 @@
 				DEVELOPMENT_TEAM = 567894995K;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = scanbro/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Scan Bro";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -291,8 +307,11 @@
 				DEVELOPMENT_TEAM = 567894995K;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = scanbro/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Scan Bro";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
