@@ -35,4 +35,75 @@ extension View {
     private var snappy: Animation {
         .snappy(duration: 0.25, extraBounce: 0)
     }
+    
+    @ViewBuilder
+    public func addCustomAlert<Content, Background>(
+        isPresented: Binding<Bool>,
+        @ViewBuilder content: () -> Content,
+        @ViewBuilder background: () -> Background
+    ) -> some View where Content: View, Background: View {
+        self
+            .modifier(
+                AlertModifier(
+                    isPresented: isPresented,
+                    alertContent: content,
+                    background: background
+                )
+            )
+    }
+}
+
+fileprivate struct AlertModifier<AlertContent, Background>: ViewModifier where AlertContent: View, Background: View {
+    @Binding var isPresented: Bool
+    @ViewBuilder var alertContent: AlertContent
+    @ViewBuilder var background: Background
+    
+    @State private var showFullScreenCover: Bool = false
+    @State private var animated: Bool = false
+    @State private var allowsInteractions: Bool = false
+    
+    func body(content: Content) -> some View {
+        content
+            .fullScreenCover(isPresented: $showFullScreenCover) {
+                ZStack {
+                    if animated {
+                        alertContent
+                            .allowsHitTesting(allowsInteractions)
+                    }
+                }
+                .presentationBackground {
+                    background
+                        .allowsHitTesting(allowsInteractions)
+                        .opacity(animated ? 1 : 0)
+                }
+                .task {
+                    try? await Task.sleep(for: .seconds(0.05))
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        animated.toggle()
+                    }
+                    
+                    try? await Task.sleep(for: .seconds(0.3))
+                    allowsInteractions.toggle()
+                }
+            }
+            .onChange(of: isPresented) { _, newValue in
+                var transaction = Transaction()
+                transaction.disablesAnimations = true
+                
+                if newValue {
+                    withTransaction(transaction) {
+                        showFullScreenCover = true
+                    }
+                } else {
+                    allowsInteractions = false
+                    withAnimation(.easeInOut(duration: 0.3), completionCriteria: .removed) {
+                        animated = false
+                    } completion: {
+                        withTransaction(transaction) {
+                            showFullScreenCover = false
+                        }
+                    }
+                }
+            }
+    }
 }

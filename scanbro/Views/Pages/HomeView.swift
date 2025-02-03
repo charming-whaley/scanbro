@@ -1,13 +1,16 @@
 import SwiftUI
 import SwiftData
 import VisionKit
+import StoreKit
 
 struct HomeView: View {
+    @AppStorage("launchCounter") var launchCounter: Int = 0
     @AppStorage("firstPaletteColor") var firstPaletteColor: String = "AppBlueColor"
     @AppStorage("secondPaletteColor") var secondPaletteColor: String = "AppPinkColor"
     @AppStorage("setDarkMode") var setDarkMode: Bool = false
     
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.requestReview) private var requestReview
     
     @Query(sort: [.init(\Document.createdAt, order: .reverse)], animation: .snappy(duration: 0.25, extraBounce: 0))
     var documents: [Document]
@@ -20,6 +23,7 @@ struct HomeView: View {
     @State private var scannedDocument: VNDocumentCameraScan?
     @State private var showErrorAlert: Bool = false
     @State private var askForDocumentName: Bool = false
+    @State private var isLoading: Bool = false
     @State private var documentName: String = ""
     
     var body: some View {
@@ -56,6 +60,48 @@ struct HomeView: View {
                 scannedDocument = nil
                 showScanner = false
             }
+            .ignoresSafeArea()
+        }
+        .addCustomAlert(isPresented: $askForDocumentName) {
+            VStack(alignment: .leading, spacing: 15) {
+                Text("New document")
+                    .font(.title.bold())
+                
+                TextField("Type here..", text: $documentName)
+                
+                Button {
+                    addDocument()
+                    askForDocumentName.toggle()
+                } label: {
+                    Text("Continue")
+                        .foregroundStyle(.white)
+                        .font(.headline.bold())
+                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity)
+                        .background(Color(firstPaletteColor), in: .rect(cornerRadius: 15))
+                        .padding(.horizontal)
+                }
+                
+                Button {
+                    documentName = "New document"
+                    scannedDocument = nil
+                    askForDocumentName.toggle()
+                } label: {
+                    Text("Delete")
+                        .foregroundStyle(.white)
+                        .font(.headline.bold())
+                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity)
+                        .background(.red, in: .rect(cornerRadius: 15))
+                        .padding(.horizontal)
+                }
+            }
+            .padding(15)
+            .background(.background, in: .rect(cornerRadius: 10))
+            .padding(.horizontal, 30)
+        } background: {
+            Rectangle()
+                .fill(.primary.opacity(0.35))
         }
         .alert(isPresented: $showErrorAlert) {
             Alert(
@@ -74,5 +120,50 @@ struct HomeView: View {
         }
         .tint(Color(firstPaletteColor))
         .preferredColorScheme(setDarkMode ? .dark : .light)
+        .onAppear {
+            handleAppLaunch()
+        }
+    }
+}
+
+fileprivate extension HomeView {
+    @MainActor
+    private func handleAppLaunch() {
+        launchCounter += 1
+        if launchCounter % 5 == 0 {
+            requestReview()
+        }
+    }
+    
+    private func addDocument() {
+        guard let scannedDocument else { return }
+        isLoading = true
+        
+        Task.detached(priority: .high) { [documentName] in
+            let document = Document(title: documentName)
+            var pages = [Page]()
+            
+            for index in 0..<scannedDocument.pageCount {
+                let scanImage = scannedDocument.imageOfPage(at: index)
+                guard let image = scanImage.jpegData(compressionQuality: 0.65) else { return }
+                pages.append(
+                    Page(
+                        document: document,
+                        pageIndex: index,
+                        content: image
+                    )
+                )
+            }
+            
+            document.pages = pages
+            await MainActor.run {
+                modelContext.insert(document)
+                try? modelContext.save()
+                
+                self.documentName = "New document"
+                self.isLoading = false
+                self.scannedDocument = nil
+            }
+        }
     }
 }
