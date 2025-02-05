@@ -7,7 +7,6 @@ struct HomeView: View {
     @AppStorage("launchCounter") var launchCounter: Int = 0
     @AppStorage("firstPaletteColor") var firstPaletteColor: String = "AppBlueColor"
     @AppStorage("secondPaletteColor") var secondPaletteColor: String = "AppPinkColor"
-    @AppStorage("setDarkMode") var setDarkMode: Bool = false
     
     @Environment(\.modelContext) private var modelContext
     @Environment(\.requestReview) private var requestReview
@@ -24,7 +23,7 @@ struct HomeView: View {
     @State private var showErrorAlert: Bool = false
     @State private var askForDocumentName: Bool = false
     @State private var isLoading: Bool = false
-    @State private var documentName: String = "New document"
+    @State private var documentName: String = "New scan"
     
     var body: some View {
         NavigationStack {
@@ -82,7 +81,7 @@ struct HomeView: View {
             }
             .addCustomAlert(isPresented: $askForDocumentName) {
                 VStack(alignment: .leading, spacing: 15) {
-                    Text("New document")
+                    Text("Add scans")
                         .font(.title.bold())
                     
                     TextField("Type here...", text: $documentName)
@@ -94,29 +93,31 @@ struct HomeView: View {
                         }
                         .padding(.bottom, 5)
                     
-                    Button {
-                        addDocument()
-                        askForDocumentName.toggle()
-                    } label: {
-                        Text("Continue")
-                            .foregroundStyle(.white)
-                            .font(.headline.bold())
-                            .padding(.vertical, 12)
-                            .frame(maxWidth: .infinity)
-                            .background(Color(firstPaletteColor), in: .rect(cornerRadius: 15))
-                    }
-                    
-                    Button {
-                        askForDocumentName.toggle()
-                        scannedDocument = nil
-                        documentName = "New document"
-                    } label: {
-                        Text("Delete")
-                            .foregroundStyle(.white)
-                            .font(.headline.bold())
-                            .padding(.vertical, 12)
-                            .frame(maxWidth: .infinity)
-                            .background(.red, in: .rect(cornerRadius: 15))
+                    HStack(spacing: 8) {
+                        Button {
+                            addDocument()
+                            askForDocumentName.toggle()
+                        } label: {
+                            Text("Continue")
+                                .foregroundStyle(.white)
+                                .font(.headline.bold())
+                                .padding(.vertical, 12)
+                                .frame(maxWidth: .infinity)
+                                .background(Color(firstPaletteColor), in: .rect(cornerRadius: 15))
+                        }
+                        
+                        Button {
+                            askForDocumentName.toggle()
+                            scannedDocument = nil
+                            documentName = "New document"
+                        } label: {
+                            Text("Delete")
+                                .foregroundStyle(.white)
+                                .font(.headline.bold())
+                                .padding(.vertical, 12)
+                                .frame(maxWidth: .infinity)
+                                .background(.red, in: .rect(cornerRadius: 15))
+                        }
                     }
                 }
                 .padding(15)
@@ -139,11 +140,9 @@ struct HomeView: View {
             .addLoadingScreen($isLoading)
             .sheet(isPresented: $showSettings) {
                 SettingsView()
-                    .colorScheme(setDarkMode ? .dark : .light)
                     .presentationDetents([.height(250)])
             }
             .tint(Color(firstPaletteColor))
-            .preferredColorScheme(setDarkMode ? .dark : .light)
             .onAppear {
                 handleAppLaunch()
             }

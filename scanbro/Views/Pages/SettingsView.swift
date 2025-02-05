@@ -5,7 +5,6 @@ struct SettingsView: View {
     
     @AppStorage("firstPaletteColor") var firstPaletteColor: String = "AppBlueColor"
     @AppStorage("secondPaletteColor") var secondPaletteColor: String = "AppPinkColor"
-    @AppStorage("setDarkMode") var setDarkMode: Bool = false
     
     var body: some View {
         NavigationStack {
@@ -16,12 +15,6 @@ struct SettingsView: View {
                     })
                 } label: {
                     Text("Check permissions")
-                }
-                
-                LabeledContent {
-                    Toggle("", isOn: $setDarkMode)
-                } label: {
-                    Text("Dark mode")
                 }
                 
                 LabeledContent {

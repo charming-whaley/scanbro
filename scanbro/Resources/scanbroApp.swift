@@ -6,6 +6,7 @@ struct scanbroApp: App {
         WindowGroup {
             HomeView()
                 .modelContainer(for: Document.self)
+                .preferredColorScheme(.light)
         }
     }
 }

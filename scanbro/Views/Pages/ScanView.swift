@@ -1,10 +1,12 @@
 import SwiftUI
 import SwiftData
 import PDFKit
+import LocalAuthentication
 
 struct ScanView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
     
     @AppStorage("firstPaletteColor") var firstPaletteColor: String = "AppBlueColor"
     
@@ -13,6 +15,9 @@ struct ScanView: View {
     @State private var isLoading: Bool = false
     @State private var askForRename: Bool = false
     @State private var documentName: String = "New name"
+    
+    @State private var isFaceIDAvailable: Bool?
+    @State private var isUnlocked: Bool = false
     
     let document: Document
     
@@ -47,7 +52,7 @@ struct ScanView: View {
                     .frame(height: 180)
                     .clipShape(CustomRoundedCorners(radius: 30, corners: [.topLeft, .topRight]))
                     .overlay(alignment: .topLeading) {
-                        VStack(alignment: .leading, spacing: 2) {
+                        VStack(alignment: .leading, spacing: 4) {
                             Text(document.title)
                                 .font(.largeTitle)
                                 .fontWeight(.black)
@@ -91,6 +96,23 @@ struct ScanView: View {
                     self.fileURL = nil
                 }
             }
+            .overlay {
+                LockView()
+            }
+            .onAppear {
+                guard document.documentLocked else {
+                    isUnlocked = true
+                    return
+                }
+                
+                let context = LAContext()
+                isFaceIDAvailable = context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+            }
+            .onChange(of: scenePhase) { oldValue, newValue in
+                if newValue != .active && document.documentLocked {
+                    isUnlocked = false
+                }
+            }
         }
     }
     
@@ -110,7 +132,8 @@ struct ScanView: View {
             }
             
             Button {
-                // FaceID logic here...
+                document.documentLocked.toggle()
+                isUnlocked = !document.documentLocked
             } label: {
                 Label("Lock with FaceID", systemImage: "faceid")
             }
@@ -124,6 +147,37 @@ struct ScanView: View {
             Image(systemName: "ellipsis.circle")
                 .font(.title2)
                 .foregroundStyle(Color(firstPaletteColor))
+        }
+    }
+    
+    @ViewBuilder
+    private func LockView() -> some View {
+        if document.documentLocked {
+            ZStack {
+                Rectangle()
+                    .fill(.ultraThinMaterial)
+                    .ignoresSafeArea()
+                
+                VStack(spacing: 6) {
+                    if let isFaceIDAvailable, !isFaceIDAvailable {
+                        Text("Please check FaceID permission status in Settings")
+                            .multilineTextAlignment(.center)
+                            .frame(width: 200)
+                    } else {
+                        Image(systemName: "lock.fill")
+                            .font(.largeTitle)
+                        
+                        Text("Tap on Unlock")
+                            .font(.callout)
+                    }
+                }
+                .padding(15)
+                .background(.bar, in: .rect(cornerRadius: 15))
+                .contentShape(.rect)
+                .onTapGesture(perform: authenticateUser)
+            }
+            .opacity(isUnlocked ? 0 : 1)
+            .animation(.snappy(duration: 0.25, extraBounce: 0), value: isUnlocked)
         }
     }
 }
@@ -140,6 +194,20 @@ fileprivate extension ScanView {
                 cornerRadii: CGSize(width: radius, height: radius)
             )
             return Path(path.cgPath)
+        }
+    }
+    
+    private func authenticateUser() {
+        let context = LAContext()
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Locked Document") { status, _ in
+                DispatchQueue.main.async {
+                    self.isUnlocked = status
+                }
+            }
+        } else {
+            isFaceIDAvailable = false
+            isUnlocked = false
         }
     }
     
