@@ -3,8 +3,6 @@ import SwiftData
 import PDFKit
 
 struct ScanView: View {
-    let document: Document
-    
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     
@@ -15,6 +13,8 @@ struct ScanView: View {
     @State private var isLoading: Bool = false
     @State private var askForRename: Bool = false
     @State private var documentName: String = "New name"
+    
+    let document: Document
     
     var body: some View {
         if let pages = document.pages?.sorted(by: { $0.pageIndex < $1.pageIndex }) {
@@ -44,7 +44,7 @@ struct ScanView: View {
                 Rectangle()
                     .fill(.white)
                     .frame(maxWidth: .infinity)
-                    .frame(height: 250)
+                    .frame(height: 180)
                     .clipShape(CustomRoundedCorners(radius: 30, corners: [.topLeft, .topRight]))
                     .overlay(alignment: .topLeading) {
                         VStack(alignment: .leading, spacing: 2) {
@@ -178,12 +178,4 @@ fileprivate extension ScanView {
             try? modelContext.save()
         }
     }
-}
-
-#Preview {
-    ScanView(
-        document: Document(
-            title: "Abracadabra"
-        )
-    )
 }

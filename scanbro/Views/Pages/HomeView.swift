@@ -24,7 +24,7 @@ struct HomeView: View {
     @State private var showErrorAlert: Bool = false
     @State private var askForDocumentName: Bool = false
     @State private var isLoading: Bool = false
-    @State private var documentName: String = ""
+    @State private var documentName: String = "New document"
     
     var body: some View {
         NavigationStack {
@@ -155,7 +155,7 @@ fileprivate extension HomeView {
     @MainActor
     private func handleAppLaunch() {
         launchCounter += 1
-        if launchCounter % 5 == 0 {
+        if launchCounter % 15 == 0 {
             requestReview()
         }
     }
