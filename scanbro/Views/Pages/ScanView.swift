@@ -19,8 +19,6 @@ struct ScanView: View {
     var body: some View {
         if let pages = document.pages?.sorted(by: { $0.pageIndex < $1.pageIndex }) {
             VStack(spacing: 10) {
-                ScanDetailsHeaderView()
-                
                 TabView {
                     ForEach(pages) { page in
                         if let image = UIImage(data: page.content) {
@@ -31,9 +29,45 @@ struct ScanView: View {
                     }
                 }
                 .tabViewStyle(.page)
+                
+                Spacer(minLength: 0)
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.black)
             .toolbarVisibility(.hidden, for: .navigationBar)
+            .overlay(alignment: .topTrailing) {
+                ScanDetailsHeaderView()
+                    .padding(.top, 60)
+                    .padding(.trailing, 20)
+            }
+            .safeAreaInset(edge: .bottom) {
+                Rectangle()
+                    .fill(.white)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 250)
+                    .clipShape(CustomRoundedCorners(radius: 30, corners: [.topLeft, .topRight]))
+                    .overlay(alignment: .topLeading) {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(document.title)
+                                .font(.largeTitle)
+                                .fontWeight(.black)
+                                .lineLimit(2)
+                                .truncationMode(.tail)
+                                .multilineTextAlignment(.leading)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            HStack(spacing: 5) {
+                                Text(document.createdAt.formatted(date: .numeric, time: .omitted))
+                                
+                                Text("Pages: \(document.pages?.count ?? 0)")
+                            }
+                            .font(.callout)
+                            .foregroundStyle(Color.secondary)
+                        }
+                        .padding(25)
+                    }
+            }
+            .ignoresSafeArea()
             .alert("Rename document", isPresented: $askForRename) {
                 TextField("Type here..", text: $documentName)
                 
@@ -62,51 +96,53 @@ struct ScanView: View {
     
     @ViewBuilder
     private func ScanDetailsHeaderView() -> some View {
-        HStack(spacing: 0) {
-            Text(document.title)
-                .font(.system(size: 20, weight: .black))
-                .foregroundStyle(.white)
-                .lineLimit(1)
-                .frame(width: 250, alignment: .leading)
-            
-            Spacer(minLength: 0)
-            
-            Menu {
-                Button {
-                    saveDocumentOnDevice()
-                } label: {
-                    Label("Save", systemImage: "arrow.down.circle.fill")
-                }
-                
-                Button {
-                    askForRename.toggle()
-                } label: {
-                    Label("Rename", systemImage: "rectangle.and.pencil.and.ellipsis")
-                }
-                
-                Button {
-                    // FaceID logic here...
-                } label: {
-                    Label("Lock with FaceID", systemImage: "faceid")
-                }
-                
-                Button(role: .destructive) {
-                    deleteScan()
-                } label: {
-                    Label("Delete", systemImage: "trash.fill")
-                }
+        Menu {
+            Button {
+                saveDocumentOnDevice()
             } label: {
-                Image(systemName: "ellipsis.circle")
-                    .font(.title2)
-                    .foregroundStyle(Color(firstPaletteColor))
+                Label("Save", systemImage: "arrow.down.circle.fill")
             }
+            
+            Button {
+                askForRename.toggle()
+            } label: {
+                Label("Rename", systemImage: "rectangle.and.pencil.and.ellipsis")
+            }
+            
+            Button {
+                // FaceID logic here...
+            } label: {
+                Label("Lock with FaceID", systemImage: "faceid")
+            }
+            
+            Button(role: .destructive) {
+                deleteScan()
+            } label: {
+                Label("Delete", systemImage: "trash.fill")
+            }
+        } label: {
+            Image(systemName: "ellipsis.circle")
+                .font(.title2)
+                .foregroundStyle(Color(firstPaletteColor))
         }
-        .addHorizonalAlignment(.leading)
-        .padding()
     }
 }
 
 fileprivate extension ScanView {
+    struct CustomRoundedCorners: Shape {
+        var radius: CGFloat
+        var corners: UIRectCorner
+        
+        func path(in rect: CGRect) -> Path {
+            let path = UIBezierPath(
+                roundedRect: rect,
+                byRoundingCorners: corners,
+                cornerRadii: CGSize(width: radius, height: radius)
+            )
+            return Path(path.cgPath)
+        }
+    }
+    
     private func saveDocumentOnDevice() {
         guard let pages = document.pages?.sorted(by: { $0.pageIndex < $1.pageIndex }) else { return }
         isLoading = true
@@ -142,4 +178,12 @@ fileprivate extension ScanView {
             try? modelContext.save()
         }
     }
+}
+
+#Preview {
+    ScanView(
+        document: Document(
+            title: "Abracadabra"
+        )
+    )
 }
