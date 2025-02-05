@@ -17,11 +17,9 @@ struct HomeView: View {
     @Query(sort: [.init(\Document.createdAt, order: .reverse)], animation: .snappy(duration: 0.25, extraBounce: 0))
     var documents: [Document]
     
-    /// Functionality properties
     @State private var showScanner: Bool = false
     @State private var showSettings: Bool = false
     
-    /// Saving new scan properties
     @State private var scannedDocument: VNDocumentCameraScan?
     @State private var showErrorAlert: Bool = false
     @State private var askForDocumentName: Bool = false
@@ -46,7 +44,7 @@ struct HomeView: View {
                     ScrollView(.vertical) {
                         ForEach(documents) { document in
                             NavigationLink {
-                                
+                                ScanView(document: document)
                             } label: {
                                 LibraryRowView(document: document, animation: animation)
                             }
@@ -86,7 +84,14 @@ struct HomeView: View {
                     Text("New document")
                         .font(.title.bold())
                     
-                    TextField("Type here..", text: $documentName)
+                    TextField("Type here...", text: $documentName)
+                        .padding(.horizontal, 15)
+                        .padding(.vertical, 12)
+                        .background {
+                            RoundedRectangle(cornerRadius: 15)
+                                .fill(.gray.opacity(0.1))
+                        }
+                        .padding(.bottom, 5)
                     
                     Button {
                         addDocument()
@@ -98,13 +103,12 @@ struct HomeView: View {
                             .padding(.vertical, 12)
                             .frame(maxWidth: .infinity)
                             .background(Color(firstPaletteColor), in: .rect(cornerRadius: 15))
-                            .padding(.horizontal)
                     }
                     
                     Button {
-                        documentName = "New document"
-                        scannedDocument = nil
                         askForDocumentName.toggle()
+                        scannedDocument = nil
+                        documentName = "New document"
                     } label: {
                         Text("Delete")
                             .foregroundStyle(.white)
@@ -112,7 +116,6 @@ struct HomeView: View {
                             .padding(.vertical, 12)
                             .frame(maxWidth: .infinity)
                             .background(.red, in: .rect(cornerRadius: 15))
-                            .padding(.horizontal)
                     }
                 }
                 .padding(15)

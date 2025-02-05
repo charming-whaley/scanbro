@@ -2,13 +2,13 @@ import SwiftUI
 
 struct LibraryRowView: View {
     let document: Document
-    let animation: Namespace.ID
+    var animation: Namespace.ID
     
     @State private var reducedImage: UIImage?
     
     var body: some View {
         HStack(spacing: 8) {
-            if let firstPage = document.pages?.sorted(by: { $0.pageIndex < $1.pageIndex }).first {
+            if let firstScreen = document.pages?.sorted(by: { $0.pageIndex < $1.pageIndex }).first {
                 GeometryReader {
                     let size = $0.size
                     
@@ -21,15 +21,15 @@ struct LibraryRowView: View {
                         Rectangle()
                             .foregroundStyle(.clear)
                             .task(priority: .high) {
-                                guard let image = UIImage(data: firstPage.content) else { return }
-                                let adjustedSize = image.size.adjustSize(to: .init(width: 150, height: 150))
+                                guard let image = UIImage(data: firstScreen.content) else { return }
+                                let adjustedSize = image.size.adjustSize(to: .init(width: 150, height: 100))
                                 let renderer = UIGraphicsImageRenderer(size: adjustedSize)
-                                let resulingImage = renderer.image { context in
+                                let result = renderer.image { context in
                                     image.draw(in: .init(origin: .zero, size: adjustedSize))
                                 }
                                 
                                 await MainActor.run {
-                                    reducedImage = resulingImage
+                                    reducedImage = result
                                 }
                             }
                     }
@@ -42,13 +42,17 @@ struct LibraryRowView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(document.title)
                     .font(.system(size: 20, weight: .bold))
-                    .lineLimit(2)
                     .foregroundStyle(Color.primary)
+                    .lineLimit(2)
+                    .truncationMode(.tail)
+                    .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Text(document.createdAt.formatted(date: .numeric, time: .omitted))
                     .font(.system(size: 12))
-                    .foregroundStyle(Color.secondary.opacity(0.9))
+                    .foregroundStyle(Color.secondary)
             }
+            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
             .frame(maxHeight: .infinity, alignment: .top)
             
             Spacer(minLength: 0)
