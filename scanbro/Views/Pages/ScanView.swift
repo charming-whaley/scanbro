@@ -2,11 +2,9 @@ import SwiftUI
 import SwiftData
 import PDFKit
 
-/// Changes that should be implemented in near future:
-/// - add diglog view to the text that on tap shows the full name of the document
-/// - implement a menu of three actions: Save document on device, delete document from context and lock it with FaceID
-/// - some little changes that can possible be added to the view
 struct ScanView: View {
+    let document: Document
+    
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     
@@ -15,8 +13,8 @@ struct ScanView: View {
     @State private var fileURL: URL?
     @State private var showFileMover: Bool = false
     @State private var isLoading: Bool = false
-    
-    let document: Document
+    @State private var askForRename: Bool = false
+    @State private var documentName: String = "New name"
     
     var body: some View {
         if let pages = document.pages?.sorted(by: { $0.pageIndex < $1.pageIndex }) {
@@ -33,11 +31,24 @@ struct ScanView: View {
                     }
                 }
                 .tabViewStyle(.page)
-                
-                ScanDetailsFooterView()
             }
             .background(.black)
             .toolbarVisibility(.hidden, for: .navigationBar)
+            .alert("Rename document", isPresented: $askForRename) {
+                TextField("Type here..", text: $documentName)
+                
+                Button("Rename", role: .cancel) {
+                    Task { @MainActor in
+                        try? await Task.sleep(for: .seconds(0.2))
+                        document.title = documentName
+                        try? modelContext.save()
+                    }
+                }
+                
+                Button("Cancel", role: .destructive) {
+                    askForRename = false
+                }
+            }
             .addLoadingScreen($isLoading)
             .fileMover(isPresented: $showFileMover, file: fileURL) { result in
                 if case .failure(_) = result {
@@ -60,57 +71,37 @@ struct ScanView: View {
             
             Spacer(minLength: 0)
             
-            Button {
-                // FaceID controller
+            Menu {
+                Button {
+                    saveDocumentOnDevice()
+                } label: {
+                    Label("Save", systemImage: "arrow.down.circle.fill")
+                }
+                
+                Button {
+                    askForRename.toggle()
+                } label: {
+                    Label("Rename", systemImage: "rectangle.and.pencil.and.ellipsis")
+                }
+                
+                Button {
+                    // FaceID logic here...
+                } label: {
+                    Label("Lock with FaceID", systemImage: "faceid")
+                }
+                
+                Button(role: .destructive) {
+                    deleteScan()
+                } label: {
+                    Label("Delete", systemImage: "trash.fill")
+                }
             } label: {
-                Image(systemName: document.documentLocked ? "lock.fill" : "lock.open.fill")
-                    .font(.title3)
+                Image(systemName: "ellipsis.circle")
+                    .font(.title2)
                     .foregroundStyle(Color(firstPaletteColor))
             }
         }
         .addHorizonalAlignment(.leading)
-        .padding()
-    }
-    
-    @ViewBuilder
-    private func ScanDetailsFooterView() -> some View {
-        HStack(spacing: 8) {
-            Button {
-                saveDocumentOnDevice()
-            } label: {
-                HStack(spacing: 8) {
-                    Image(systemName: "arrow.down.circle.fill")
-                    Text("Save")
-                }
-                .foregroundStyle(.white)
-                .font(.headline)
-                .padding(.vertical, 10)
-                .padding(.horizontal)
-                .background {
-                    Capsule()
-                        .fill(Color(firstPaletteColor))
-                }
-            }
-            
-            Button {
-                deleteScan()
-            } label: {
-                HStack(spacing: 8) {
-                    Image(systemName: "trash.fill")
-                    Text("Delete")
-                }
-                .foregroundStyle(.white)
-                .font(.headline)
-                .padding(.vertical, 10)
-                .padding(.horizontal)
-                .background {
-                    Capsule()
-                        .fill(.red)
-                }
-            }
-            
-            Spacer(minLength: 0)
-        }
         .padding()
     }
 }
