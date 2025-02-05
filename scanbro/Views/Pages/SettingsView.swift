@@ -11,6 +11,14 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 LabeledContent {
+                    Button("Open Settings", action: {
+                        UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                    })
+                } label: {
+                    Text("Check permissions")
+                }
+                
+                LabeledContent {
                     Toggle("", isOn: $setDarkMode)
                 } label: {
                     Text("Dark mode")

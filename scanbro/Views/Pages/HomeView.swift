@@ -45,6 +45,7 @@ struct HomeView: View {
                         ForEach(documents) { document in
                             NavigationLink {
                                 ScanView(document: document)
+                                    .navigationTransition(.zoom(sourceID: document.uniqutStringID, in: animation))
                             } label: {
                                 LibraryRowView(document: document, animation: animation)
                             }
