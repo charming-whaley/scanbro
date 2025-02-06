@@ -1,0 +1,39 @@
+// Home page localization
+
+"home_header_title" = "Library";
+"home_header_button" = "Scan";
+"home_new_document_name" = "New document";
+"home_list_action_delete" = "Delete";
+"home_alert_title" = "Add scans";
+"home_alert_textfield" = "Type here...";
+"home_alert_button_continue" = "Continue";
+"home_alert_button_delete" = "Delete";
+"home_error_alert_title" = "Oops!";
+"home_error_alert_description" = "Something weird happened while connecting to your camera! Please check all permissions or relaunch an app!";
+"home_error_alert_button" = "Continue";
+"home_empty_list_title" = "No Documents";
+"home_empty_list_description" = "It seems like you haven't added any documents. Tap on Scan button at the top to add a new one";
+
+// Settings page localization
+"settings_title" = "Settings";
+"settings_title_check" = "Check permissions";
+"settings_title_color" = "Color scheme";
+"settings_button_open" = "Open settings";
+"settings_button_cancel" = "Close";
+
+// Scan page localization
+
+"rename_document" = "New name";
+"pages_counter_text" = "Pages: ";
+"rename_alert_title" = "Rename document";
+"rename_alert_textfield" = "Type here...";
+"rename_alert_button" = "Rename";
+"rename_alert_button_cancel" = "Cancel";
+"scan_page_menu_save" = "Save";
+"scan_page_menu_rename" = "Rename";
+"scan_page_menu_unlock" = "Unlock document";
+"scan_page_menu_lock" = "Lock with FaceID";
+"scan_page_menu_delete" = "Delete";
+"faceid_control_title" = "Locked Document";
+"faceid_control_error" = "Please check FaceID permission status in Settings";
+"faceid_control_button" = "Tap to unlock";

@@ -14,7 +14,7 @@ struct ScanView: View {
     @State private var showFileMover: Bool = false
     @State private var isLoading: Bool = false
     @State private var askForRename: Bool = false
-    @State private var documentName: String = "New name"
+    @State private var documentName: String = NSLocalizedString("rename_document", comment: "")
     
     @State private var isFaceIDAvailable: Bool?
     @State private var isUnlocked: Bool = false
@@ -64,7 +64,7 @@ struct ScanView: View {
                             HStack(spacing: 5) {
                                 Text(document.createdAt.formatted(date: .numeric, time: .omitted))
                                 
-                                Text("Pages: \(document.pages?.count ?? 0)")
+                                Text(NSLocalizedString("pages_counter_text", comment: "") + ": \(document.pages?.count ?? 0)")
                             }
                             .font(.callout)
                             .foregroundStyle(Color.secondary)
@@ -73,10 +73,10 @@ struct ScanView: View {
                     }
             }
             .ignoresSafeArea()
-            .alert("Rename document", isPresented: $askForRename) {
-                TextField("Type here..", text: $documentName)
+            .alert(NSLocalizedString("rename_alert_title", comment: ""), isPresented: $askForRename) {
+                TextField(NSLocalizedString("rename_alert_textfield", comment: ""), text: $documentName)
                 
-                Button("Rename", role: .cancel) {
+                Button(NSLocalizedString("rename_alert_button", comment: ""), role: .cancel) {
                     Task { @MainActor in
                         try? await Task.sleep(for: .seconds(0.2))
                         document.title = documentName
@@ -84,7 +84,7 @@ struct ScanView: View {
                     }
                 }
                 
-                Button("Cancel", role: .destructive) {
+                Button(NSLocalizedString("rename_alert_button_cancel", comment: ""), role: .destructive) {
                     askForRename = false
                 }
             }
@@ -113,6 +113,7 @@ struct ScanView: View {
                     isUnlocked = false
                 }
             }
+            .toolbarColorScheme(.dark, for: .navigationBar)
         }
     }
     
@@ -122,26 +123,26 @@ struct ScanView: View {
             Button {
                 saveDocumentOnDevice()
             } label: {
-                Label("Save", systemImage: "arrow.down.circle.fill")
+                Label(NSLocalizedString("scan_page_menu_save", comment: ""), systemImage: "arrow.down.circle.fill")
             }
             
             Button {
                 askForRename.toggle()
             } label: {
-                Label("Rename", systemImage: "rectangle.and.pencil.and.ellipsis")
+                Label(NSLocalizedString("scan_page_menu_rename", comment: ""), systemImage: "rectangle.and.pencil.and.ellipsis")
             }
             
             Button {
                 document.documentLocked.toggle()
                 isUnlocked = !document.documentLocked
             } label: {
-                Label("Lock with FaceID", systemImage: "faceid")
+                Label(document.documentLocked ? NSLocalizedString("scan_page_menu_unlock", comment: "") : NSLocalizedString("scan_page_menu_lock", comment: ""), systemImage: "faceid")
             }
             
             Button(role: .destructive) {
                 deleteScan()
             } label: {
-                Label("Delete", systemImage: "trash.fill")
+                Label(NSLocalizedString("scan_page_menu_delete", comment: ""), systemImage: "trash.fill")
             }
         } label: {
             Image(systemName: "ellipsis.circle")
@@ -160,14 +161,14 @@ struct ScanView: View {
                 
                 VStack(spacing: 6) {
                     if let isFaceIDAvailable, !isFaceIDAvailable {
-                        Text("Please check FaceID permission status in Settings")
+                        Text(NSLocalizedString("faceid_control_error", comment: ""))
                             .multilineTextAlignment(.center)
                             .frame(width: 200)
                     } else {
                         Image(systemName: "lock.fill")
                             .font(.largeTitle)
                         
-                        Text("Tap on Unlock")
+                        Text(NSLocalizedString("faceid_control_button", comment: ""))
                             .font(.callout)
                     }
                 }
@@ -200,7 +201,7 @@ fileprivate extension ScanView {
     private func authenticateUser() {
         let context = LAContext()
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil) {
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "Locked Document") { status, _ in
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: NSLocalizedString("faceid_control_title", comment: "")) { status, _ in
                 DispatchQueue.main.async {
                     self.isUnlocked = status
                 }

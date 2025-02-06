@@ -23,7 +23,7 @@ struct HomeView: View {
     @State private var showErrorAlert: Bool = false
     @State private var askForDocumentName: Bool = false
     @State private var isLoading: Bool = false
-    @State private var documentName: String = "New scan"
+    @State private var documentName: String = NSLocalizedString("home_new_document_name", comment: "")
     
     var body: some View {
         NavigationStack {
@@ -56,7 +56,7 @@ struct HomeView: View {
                                         try? modelContext.save()
                                     }
                                 } label: {
-                                    Label("Delete", systemImage: "trash.fill")
+                                    Label(NSLocalizedString("home_list_action_delete", comment: ""), systemImage: "trash.fill")
                                 }
                             }
                         }
@@ -81,10 +81,10 @@ struct HomeView: View {
             }
             .addCustomAlert(isPresented: $askForDocumentName) {
                 VStack(alignment: .leading, spacing: 15) {
-                    Text("Add scans")
+                    Text(NSLocalizedString("home_alert_title", comment: ""))
                         .font(.title.bold())
                     
-                    TextField("Type here...", text: $documentName)
+                    TextField(NSLocalizedString("home_alert_textfield", comment: ""), text: $documentName)
                         .padding(.horizontal, 15)
                         .padding(.vertical, 12)
                         .background {
@@ -98,7 +98,7 @@ struct HomeView: View {
                             addDocument()
                             askForDocumentName.toggle()
                         } label: {
-                            Text("Continue")
+                            Text(NSLocalizedString("home_alert_button_continue", comment: ""))
                                 .foregroundStyle(.white)
                                 .font(.headline.bold())
                                 .padding(.vertical, 12)
@@ -109,9 +109,9 @@ struct HomeView: View {
                         Button {
                             askForDocumentName.toggle()
                             scannedDocument = nil
-                            documentName = "New document"
+                            documentName = NSLocalizedString("home_new_document_name", comment: "")
                         } label: {
-                            Text("Delete")
+                            Text(NSLocalizedString("home_alert_button_delete", comment: ""))
                                 .foregroundStyle(.white)
                                 .font(.headline.bold())
                                 .padding(.vertical, 12)
@@ -129,9 +129,9 @@ struct HomeView: View {
             }
             .alert(isPresented: $showErrorAlert) {
                 Alert(
-                    title: Text("Oops!"),
-                    message: Text("Something wrong with your camera happened! Please check all permissions or relaunch an app!"),
-                    dismissButton: .default(Text("Continue")) {
+                    title: Text(NSLocalizedString("home_error_alert_title", comment: "")),
+                    message: Text(NSLocalizedString("home_error_alert_description", comment: "")),
+                    dismissButton: .default(Text(NSLocalizedString("home_error_alert_button", comment: ""))) {
                         scannedDocument = nil
                         showErrorAlert = false
                     }
@@ -184,7 +184,7 @@ fileprivate extension HomeView {
                 modelContext.insert(document)
                 try? modelContext.save()
                 
-                self.documentName = "New document"
+                self.documentName = NSLocalizedString("home_new_document_name", comment: "")
                 self.isLoading = false
                 self.scannedDocument = nil
             }

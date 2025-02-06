@@ -9,7 +9,7 @@ struct HomeHeaderView: View {
     
     var body: some View {
         HStack(spacing: 8) {
-            Text("Library")
+            Text(NSLocalizedString("home_header_title", comment: ""))
                 .font(.largeTitle)
                 .fontWeight(.black)
             
@@ -25,7 +25,7 @@ struct HomeHeaderView: View {
                         .frame(width: 20, height: 20)
                         .foregroundStyle(.white)
                     
-                    Text("Scan")
+                    Text(NSLocalizedString("home_header_button", comment: ""))
                         .font(.headline)
                         .foregroundStyle(.white)
                 }

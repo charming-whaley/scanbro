@@ -10,11 +10,11 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 LabeledContent {
-                    Button("Open Settings", action: {
+                    Button(NSLocalizedString("settings_button_open", comment: ""), action: {
                         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                     })
                 } label: {
-                    Text("Check permissions")
+                    Text(NSLocalizedString("settings_title_check", comment: ""))
                 }
                 
                 LabeledContent {
@@ -36,14 +36,14 @@ struct SettingsView: View {
                         }
                     }
                 } label: {
-                    Text("Color scheme")
+                    Text(NSLocalizedString("settings_title_color", comment: ""))
                 }
             }
-            .navigationTitle("Settings")
+            .navigationTitle(NSLocalizedString("settings_title", comment: ""))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel", action: { dismiss() })
+                    Button(NSLocalizedString("settings_button_cancel", comment: ""), action: { dismiss() })
                 }
             }
         }
