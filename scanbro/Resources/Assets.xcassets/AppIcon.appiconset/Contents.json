@@ -323,6 +323,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "40 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -335,6 +336,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "60 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -347,6 +349,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "58 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -359,6 +362,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "87 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -371,6 +375,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "76 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -383,6 +388,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "114 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -395,6 +401,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "80 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -407,6 +414,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "120 4.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -419,6 +427,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "120 5.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -431,6 +440,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "180 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -443,6 +453,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "128 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -455,6 +466,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "icon_tinted.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
@@ -479,6 +491,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "152 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -491,6 +504,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "167 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -503,6 +517,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "1024 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
