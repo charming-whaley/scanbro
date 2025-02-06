@@ -1,0 +1,39 @@
+// Home page localization
+
+"home_header_title" = "Liste";
+"home_header_button" = "Balayage";
+"home_new_document_name" = "Nouveau document";
+"home_list_action_delete" = "Supprimer";
+"home_alert_title" = "Ajouter des scans";
+"home_alert_textfield" = "Tapez ici...";
+"home_alert_button_continue" = "Continuer";
+"home_alert_button_delete" = "Supprimer";
+"home_error_alert_title" = "Oups!";
+"home_error_alert_description" = "Une erreur étrange s'est produite lors de la connexion à votre caméra ! Veuillez vérifier toutes les autorisations ou relancer une application !";
+"home_error_alert_button" = "Continuer";
+"home_empty_list_title" = "Aucun document";
+"home_empty_list_description" = "Il semble que vous n'ayez ajouté aucun document. Appuyez sur le bouton Numériser en haut pour en ajouter un nouveau";
+
+// Settings page localization
+"settings_title" = "Paramètres";
+"settings_title_check" = "Vérifier les autorisations";
+"settings_title_color" = "Palette de couleurs";
+"settings_button_open" = "Ouvrir les paramètres";
+"settings_button_cancel" = "Fermer";
+
+// Scan page localization
+
+"rename_document" = "Nouveau nom";
+"pages_counter_text" = "Pages";
+"rename_alert_title" = "Renommer le document";
+"rename_alert_textfield" = "Tapez ici...";
+"rename_alert_button" = "Rebaptiser";
+"rename_alert_button_cancel" = "Annuler";
+"scan_page_menu_save" = "Sauvegarder";
+"scan_page_menu_rename" = "Rebaptiser";
+"scan_page_menu_unlock" = "Déverrouiller le document";
+"scan_page_menu_lock" = "Verrouillage avec FaceID";
+"scan_page_menu_delete" = "Supprimer";
+"faceid_control_title" = "Document verrouillé";
+"faceid_control_error" = "Veuillez vérifier l'état d'autorisation de FaceID dans les paramètres";
+"faceid_control_button" = "Appuyez pour déverrouiller";

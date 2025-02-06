@@ -1,0 +1,39 @@
+// Home page localization
+
+"home_header_title" = "图书馆";
+"home_header_button" = "扫描";
+"home_new_document_name" = "新建文档";
+"home_list_action_delete" = "删除";
+"home_alert_title" = "添加扫描";
+"home_alert_textfield" = "在此处输入...";
+"home_alert_button_continue" = "继续";
+"home_alert_button_delete" = "删除";
+"home_error_alert_title" = "哎呀！";
+"home_error_alert_description" = "连接相机时发生了一些奇怪的事情！请检查所有权限或重新启动应用程序!";
+"home_error_alert_button" = "继续";
+"home_empty_list_title" = "没有文件";
+"home_empty_list_description" = "您似乎尚未添加任何文档。点击顶部的“扫描”按钮即可添加新文档";
+
+// Settings page localization
+"settings_title" = "设置";
+"settings_title_check" = "检查权限";
+"settings_title_color" = "配色方案";
+"settings_button_open" = "打开设置";
+"settings_button_cancel" = "关闭";
+
+// Scan page localization
+
+"rename_document" = "新名称";
+"pages_counter_text" = "文档页面";
+"rename_alert_title" = "重命名文档";
+"rename_alert_textfield" = "在此处输入...";
+"rename_alert_button" = "重命名";
+"rename_alert_button_cancel" = "取消";
+"scan_page_menu_save" = "节省";
+"scan_page_menu_rename" = "重命名";
+"scan_page_menu_unlock" = "解锁文档";
+"scan_page_menu_lock" = "使用 FaceID 锁定";
+"scan_page_menu_delete" = "删除";
+"faceid_control_title" = "锁定文件";
+"faceid_control_error" = "请在设置中检查 FaceID 权限状态";
+"faceid_control_button" = "轻触即可解锁";
