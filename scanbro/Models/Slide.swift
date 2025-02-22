@@ -1,8 +1,13 @@
-//
-//  Slide.swift
-//  scanbro
-//
-//  Created by Fedor Katkov on 02.02.2025.
-//
+import SwiftUI
 
-import Foundation
+public struct Slide: Identifiable, Hashable {
+    public var id: String = UUID().uuidString
+    var image: String
+}
+
+var slides: [Slide] = [
+    .init(image: "img 1"),
+    .init(image: "img 2"),
+    .init(image: "img 3"),
+    .init(image: "img 4")
+]

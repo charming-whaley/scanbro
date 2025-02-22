@@ -36,6 +36,13 @@ extension View {
         .snappy(duration: 0.25, extraBounce: 0)
     }
     
+    func addBlurOpacityEffect(_ show: Bool) -> some View {
+        self
+            .blur(radius: show ? 0 : 2)
+            .opacity(show ? 1 : 0)
+            .scaleEffect(show ? 1 : 0.9)
+    }
+    
     @ViewBuilder
     public func addCustomAlert<Content, Background>(
         isPresented: Binding<Bool>,
