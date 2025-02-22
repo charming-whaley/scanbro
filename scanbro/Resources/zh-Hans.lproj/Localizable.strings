@@ -1,3 +1,9 @@
+// Introduction page localization
+
+"introduction_subtitle" = "欢迎来到";
+"introduction_description" = "需要一种可靠的方法来扫描 iPhone 上的文档？Scan Bro 可轻松高效地确保扫描清晰、高质量的文档。";
+"introduction_button" = "我们走吧！";
+
 // Home page localization
 
 "home_header_title" = "图书馆";

@@ -1,3 +1,9 @@
+// Introduction page localization
+
+"introduction_subtitle" = "Welcome to";
+"introduction_description" = "Need a reliable way to scan documents on your iPhone? Scan Bro ensures clear, high-quality scans effortlessly and efficiently.";
+"introduction_button" = "Let's go!";
+
 // Home page localization
 
 "home_header_title" = "Library";

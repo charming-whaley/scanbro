@@ -1,3 +1,9 @@
+// Introduction page localization
+
+"introduction_subtitle" = "Привет";
+"introduction_description" = "Нужен надежный способ сканирования документов на iPhone? Scan Bro обеспечивает четкое, высококачественное сканирование без усилий и эффективно.";
+"introduction_button" = "Поехали!";
+
 // Локализация домшней страницы
 
 "home_header_title" = "Список";

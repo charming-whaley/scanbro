@@ -54,7 +54,7 @@ public struct IntroductionView: View {
                 }
                 
                 VStack(spacing: 4) {
-                    Text("Welcome to")
+                    Text(NSLocalizedString("introduction_subtitle", comment: ""))
                         .fontWeight(.semibold)
                         .foregroundStyle(.white.secondary)
                         .addBlurOpacityEffect(initialAnimation)
@@ -65,7 +65,7 @@ public struct IntroductionView: View {
                         .padding(.bottom, 12)
                         .textRenderer(CustomTextRenderer(progress: titleProgress))
                     
-                    Text("Scan any document")
+                    Text(NSLocalizedString("introduction_description", comment: ""))
                         .font(.callout)
                         .multilineTextAlignment(.center)
                         .foregroundStyle(.white.secondary)
@@ -76,7 +76,7 @@ public struct IntroductionView: View {
                     showIntroView = false
                     timer.upstream.connect().cancel()
                 } label: {
-                    Text("Let's go!")
+                    Text(NSLocalizedString("introduction_button", comment: ""))
                         .fontWeight(.semibold)
                         .foregroundStyle(.black)
                         .padding(.horizontal, 25)

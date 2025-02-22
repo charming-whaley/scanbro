@@ -1,3 +1,9 @@
+// Introduction page localization
+
+"introduction_subtitle" = "Bienvenue à";
+"introduction_description" = "Vous avez besoin d'un moyen fiable pour numériser des documents sur votre iPhone ? Scan Bro garantit des numérisations claires et de haute qualité, sans effort et efficacement.";
+"introduction_button" = "Allons-y!";
+
 // Home page localization
 
 "home_header_title" = "Liste";
