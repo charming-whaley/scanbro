@@ -1,7 +1,7 @@
 import Foundation
 
-struct ColorPalette: Identifiable {
-    var id = UUID().uuidString
+public struct ColorPalette: Identifiable {
+    public var id = UUID().uuidString
     var firstPaletteColor, secondPaletteColor: String
 }
 

@@ -4,7 +4,8 @@ struct LibraryRowView: View {
     let document: Document
     var animation: Namespace.ID
     
-    @State private var reducedImage: UIImage?
+    @State
+    private var reducedImage: UIImage?
     
     var body: some View {
         HStack(spacing: 8) {

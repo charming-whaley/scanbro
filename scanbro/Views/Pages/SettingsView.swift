@@ -1,10 +1,13 @@
 import SwiftUI
 
 struct SettingsView: View {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismiss)
+    private var dismiss
     
-    @AppStorage("firstPaletteColor") var firstPaletteColor: String = "AppBlueColor"
-    @AppStorage("secondPaletteColor") var secondPaletteColor: String = "AppPinkColor"
+    @AppStorage("firstPaletteColor") 
+    var firstPaletteColor: String = "AppBlueColor"
+    @AppStorage("secondPaletteColor") 
+    var secondPaletteColor: String = "AppPinkColor"
     
     var body: some View {
         NavigationStack {

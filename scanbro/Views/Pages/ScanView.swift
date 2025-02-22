@@ -4,20 +4,31 @@ import PDFKit
 import LocalAuthentication
 
 struct ScanView: View {
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.modelContext) private var modelContext
-    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.dismiss)
+    private var dismiss
+    @Environment(\.modelContext)
+    private var modelContext
+    @Environment(\.scenePhase)
+    private var scenePhase
     
-    @AppStorage("firstPaletteColor") var firstPaletteColor: String = "AppBlueColor"
+    @AppStorage("firstPaletteColor") 
+    var firstPaletteColor: String = "AppBlueColor"
     
-    @State private var fileURL: URL?
-    @State private var showFileMover: Bool = false
-    @State private var isLoading: Bool = false
-    @State private var askForRename: Bool = false
-    @State private var documentName: String = NSLocalizedString("rename_document", comment: "")
+    @State
+    private var fileURL: URL?
+    @State
+    private var showFileMover: Bool = false
+    @State
+    private var isLoading: Bool = false
+    @State
+    private var askForRename: Bool = false
+    @State
+    private var documentName: String = NSLocalizedString("rename_document", comment: "")
     
-    @State private var isFaceIDAvailable: Bool?
-    @State private var isUnlocked: Bool = false
+    @State
+    private var isFaceIDAvailable: Bool?
+    @State
+    private var isUnlocked: Bool = false
     
     let document: Document
     

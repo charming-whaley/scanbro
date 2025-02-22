@@ -4,8 +4,10 @@ struct HomeHeaderView: View {
     var firstPaletteColor: String
     var secondPaletteColor: String
     
-    @Binding var showScanner: Bool
-    @Binding var showSettings: Bool
+    @Binding
+    var showScanner: Bool
+    @Binding
+    var showSettings: Bool
     
     var body: some View {
         HStack(spacing: 8) {

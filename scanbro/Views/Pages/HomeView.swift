@@ -4,26 +4,39 @@ import VisionKit
 import StoreKit
 
 struct HomeView: View {
-    @AppStorage("launchCounter") var launchCounter: Int = 0
-    @AppStorage("firstPaletteColor") var firstPaletteColor: String = "AppBlueColor"
-    @AppStorage("secondPaletteColor") var secondPaletteColor: String = "AppPinkColor"
+    @AppStorage("launchCounter")
+    var launchCounter: Int = 0
+    @AppStorage("firstPaletteColor") 
+    var firstPaletteColor: String = "AppBlueColor"
+    @AppStorage("secondPaletteColor") 
+    var secondPaletteColor: String = "AppPinkColor"
     
-    @Environment(\.modelContext) private var modelContext
-    @Environment(\.requestReview) private var requestReview
+    @Environment(\.modelContext)
+    private var modelContext
+    @Environment(\.requestReview)
+    private var requestReview
     
-    @Namespace var animation
+    @Namespace
+    var animation
     
     @Query(sort: [.init(\Document.createdAt, order: .reverse)], animation: .snappy(duration: 0.25, extraBounce: 0))
     var documents: [Document]
     
-    @State private var showScanner: Bool = false
-    @State private var showSettings: Bool = false
+    @State
+    private var showScanner: Bool = false
+    @State
+    private var showSettings: Bool = false
     
-    @State private var scannedDocument: VNDocumentCameraScan?
-    @State private var showErrorAlert: Bool = false
-    @State private var askForDocumentName: Bool = false
-    @State private var isLoading: Bool = false
-    @State private var documentName: String = NSLocalizedString("home_new_document_name", comment: "")
+    @State
+    private var scannedDocument: VNDocumentCameraScan?
+    @State
+    private var showErrorAlert: Bool = false
+    @State
+    private var askForDocumentName: Bool = false
+    @State
+    private var isLoading: Bool = false
+    @State
+    private var documentName: String = NSLocalizedString("home_new_document_name", comment: "")
     
     var body: some View {
         NavigationStack {
