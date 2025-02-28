@@ -13,10 +13,10 @@ public struct RootView: View {
     var documents: [Document]
     
     @Namespace var animation
-    
+     
     @State private var showScanner: Bool = false
     @State private var scannedDocument: VNDocumentCameraScan?
-    @State private var documentName: String = "New document"
+    @State private var documentName: String = String(localized: "home_original_name")
     @State private var askForDocumentName: Bool = false
     @State private var showSettings: Bool = false
     @State private var showErrorAlert: Bool = false
@@ -64,28 +64,28 @@ public struct RootView: View {
             }
             .addCustomAlert(isPresented: $askForDocumentName) {
                 VStack(alignment: .leading, spacing: 15) {
-                    Text("Add item")
+                    Text(String(localized: "home_alert_title"))
                         .font(.system(size: 30, weight: .heavy, design: .rounded))
                         .foregroundStyle(.black)
                     
                     CustomTextField(
                         withStyleOf: .init(
-                            limit: 100,
+                            limit: 70,
                             tint: Color.secondary,
                             allowsAutoResize: true
                         ),
-                        AndHint: "Type here...",
+                        AndHint: String(localized: "home_alert_hint"),
                         Changing: $documentName
                     )
                     .autocorrectionDisabled()
-                    .frame(maxHeight: 130, alignment: .top)
+                    .frame(maxHeight: 110, alignment: .top)
                     
                     HStack(spacing: 8) {
                         Button {
                             addDocument()
                             askForDocumentName.toggle()
                         } label: {
-                            Text(NSLocalizedString("home_alert_button_continue", comment: ""))
+                            Text(String(localized: "home_alert_first_action"))
                                 .foregroundStyle(.white)
                                 .font(.headline.bold())
                                 .padding(.vertical, 12)
@@ -96,9 +96,9 @@ public struct RootView: View {
                         Button {
                             askForDocumentName.toggle()
                             scannedDocument = nil
-                            documentName = NSLocalizedString("home_new_document_name", comment: "")
+                            documentName = String(localized: "home_original_name")
                         } label: {
-                            Text(NSLocalizedString("home_alert_button_delete", comment: ""))
+                            Text(String(localized: "home_alert_second_action"))
                                 .foregroundStyle(.white)
                                 .font(.headline.bold())
                                 .padding(.vertical, 12)
@@ -116,9 +116,9 @@ public struct RootView: View {
             }
             .alert(isPresented: $showErrorAlert) {
                 Alert(
-                    title: Text("Error"),
-                    message: Text("Some error"),
-                    dismissButton: .default(Text("")) {
+                    title: Text(String(localized: "home_error_alert_title")),
+                    message: Text(String(localized: "home_error_alert_description")),
+                    dismissButton: .default(Text(String(localized: "home_error_alert_action"))) {
                         scannedDocument = nil
                         showErrorAlert = false
                     }
@@ -126,7 +126,7 @@ public struct RootView: View {
             }
             .sheet(isPresented: $showSettings) {
                 SettingsView()
-                    .presentationDetents([.height(250)])
+                    .presentationDetents([.height(200)])
             }
         }
     }
@@ -134,7 +134,7 @@ public struct RootView: View {
     @ViewBuilder
     private func CollectionView() -> some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("All")
+            Text(String(localized: "home_collection_title"))
                 .font(.system(size: 20, weight: .semibold, design: .rounded))
                 .foregroundStyle(.black)
             
@@ -157,7 +157,7 @@ public struct RootView: View {
                                     try? modelContext.save()
                                 }
                             } label: {
-                                Label(NSLocalizedString("home_list_action_delete", comment: ""), systemImage: "trash.fill")
+                                Label(String(localized: "home_collection_item_action"), systemImage: "trash.fill")
                             }
                         }
                     }
@@ -204,7 +204,7 @@ fileprivate extension RootView {
                 modelContext.insert(document)
                 try? modelContext.save()
                 
-                self.documentName = NSLocalizedString("home_new_document_name", comment: "")
+                self.documentName = String(localized: "home_original_name")
                 self.scannedDocument = nil
             }
         }
@@ -213,164 +213,4 @@ fileprivate extension RootView {
 
 #Preview {
     RootView()
-}
-
-extension RootView {
-//    @AppStorage("launchCounter")
-//    var launchCounter: Int = 0
-//    @AppStorage("firstPaletteColor")
-//    var firstPaletteColor: String = "AppBlueColor"
-//    @AppStorage("secondPaletteColor")
-//    var secondPaletteColor: String = "AppPinkColor"
-//
-//    @Environment(\.modelContext)
-//    private var modelContext
-//    @Environment(\.requestReview)
-//    private var requestReview
-//
-//    @Namespace
-//    var animation
-//
-//    @Query(sort: [.init(\Document.createdAt, order: .reverse)], animation: .snappy(duration: 0.25, extraBounce: 0))
-//    var documents: [Document]
-//
-//    @State
-//    private var showScanner: Bool = false
-//    @State
-//    private var showSettings: Bool = false
-//
-//    @State
-//    private var scannedDocument: VNDocumentCameraScan?
-//    @State
-//    private var showErrorAlert: Bool = false
-//    @State
-//    private var askForDocumentName: Bool = false
-//    @State
-//    private var isLoading: Bool = false
-//    @State
-//    private var documentName: String = NSLocalizedString("home_new_document_name", comment: "")
-//
-//    var body: some View {
-//        NavigationStack {
-//            VStack(spacing: 15) {
-//                HomeHeaderView(
-//                    firstPaletteColor: firstPaletteColor,
-//                    secondPaletteColor: secondPaletteColor,
-//                    showScanner: $showScanner,
-//                    showSettings: $showSettings
-//                )
-//                .padding()
-//
-//                if (documents.isEmpty) {
-//                    HomeEmptyListView()
-//                        .addVerticalAlignment(.center)
-//                } else {
-//                    ScrollView(.vertical) {
-//                        ForEach(documents) { document in
-//                            NavigationLink {
-//                                ScanView(document: document)
-//                                    .navigationTransition(.zoom(sourceID: document.uniqutStringID, in: animation))
-//                            } label: {
-//                                LibraryRowView(document: document, animation: animation)
-//                            }
-//                            .contextMenu {
-//                                Button(role: .destructive) {
-//                                    Task { @MainActor in
-//                                        try? await Task.sleep(for: .seconds(0.2))
-//                                        modelContext.delete(document)
-//                                        try? modelContext.save()
-//                                    }
-//                                } label: {
-//                                    Label(NSLocalizedString("home_list_action_delete", comment: ""), systemImage: "trash.fill")
-//                                }
-//                            }
-//                        }
-//                    }
-//                    .scrollIndicators(.hidden)
-//                    .contentMargins(15)
-//                }
-//            }
-//            .fullScreenCover(isPresented: $showScanner) {
-//                ScannerView { scan in
-//                    scannedDocument = scan
-//                    askForDocumentName = true
-//                    showScanner = false
-//                } finishedWithError: { error in
-//                    showScanner = false
-//                    showErrorAlert = true
-//                } cancelled: {
-//                    scannedDocument = nil
-//                    showScanner = false
-//                }
-//                .ignoresSafeArea()
-//            }
-//            .addCustomAlert(isPresented: $askForDocumentName) {
-//                VStack(alignment: .leading, spacing: 15) {
-//                    Text(NSLocalizedString("home_alert_title", comment: ""))
-//                        .font(.title.bold())
-//
-//                    TextField(NSLocalizedString("home_alert_textfield", comment: ""), text: $documentName)
-//                        .padding(.horizontal, 15)
-//                        .padding(.vertical, 12)
-//                        .background {
-//                            RoundedRectangle(cornerRadius: 15)
-//                                .fill(.gray.opacity(0.1))
-//                        }
-//                        .padding(.bottom, 5)
-//
-//                    HStack(spacing: 8) {
-//                        Button {
-//                            addDocument()
-//                            askForDocumentName.toggle()
-//                        } label: {
-//                            Text(NSLocalizedString("home_alert_button_continue", comment: ""))
-//                                .foregroundStyle(.white)
-//                                .font(.headline.bold())
-//                                .padding(.vertical, 12)
-//                                .frame(maxWidth: .infinity)
-//                                .background(Color(firstPaletteColor), in: .rect(cornerRadius: 15))
-//                        }
-//
-//                        Button {
-//                            askForDocumentName.toggle()
-//                            scannedDocument = nil
-//                            documentName = NSLocalizedString("home_new_document_name", comment: "")
-//                        } label: {
-//                            Text(NSLocalizedString("home_alert_button_delete", comment: ""))
-//                                .foregroundStyle(.white)
-//                                .font(.headline.bold())
-//                                .padding(.vertical, 12)
-//                                .frame(maxWidth: .infinity)
-//                                .background(.red, in: .rect(cornerRadius: 15))
-//                        }
-//                    }
-//                }
-//                .padding(15)
-//                .background(.background, in: .rect(cornerRadius: 10))
-//                .padding(.horizontal, 30)
-//            } background: {
-//                Rectangle()
-//                    .fill(.primary.opacity(0.35))
-//            }
-//            .alert(isPresented: $showErrorAlert) {
-//                Alert(
-//                    title: Text(NSLocalizedString("home_error_alert_title", comment: "")),
-//                    message: Text(NSLocalizedString("home_error_alert_description", comment: "")),
-//                    dismissButton: .default(Text(NSLocalizedString("home_error_alert_button", comment: ""))) {
-//                        scannedDocument = nil
-//                        showErrorAlert = false
-//                    }
-//                )
-//            }
-//            .addLoadingScreen($isLoading)
-//            .sheet(isPresented: $showSettings) {
-//                SettingsView()
-//                    .presentationDetents([.height(250)])
-//            }
-//            .tint(Color(firstPaletteColor))
-//            .onAppear {
-//                handleAppLaunch()
-//            }
-//        }
-//    }
 }

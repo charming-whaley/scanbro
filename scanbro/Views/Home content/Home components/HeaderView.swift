@@ -15,7 +15,7 @@ public struct HeaderView: View {
     
     public var body: some View {
         HStack {
-            Text("Library")
+            Text(String(localized: "home_header_title"))
                 .font(.largeTitle)
                 .fontWeight(.black)
                 .foregroundStyle(.white)

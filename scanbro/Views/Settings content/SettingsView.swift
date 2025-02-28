@@ -8,20 +8,21 @@ struct SettingsView: View {
         NavigationStack {
             Form {
                 LabeledContent {
-                    Button(NSLocalizedString("settings_button_open", comment: ""), action: {
+                    Button(String(localized: "settings_item_action_label"), action: {
                         UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
                     })
                 } label: {
-                    Text(NSLocalizedString("settings_title_check", comment: ""))
+                    Text(String(localized: "settings_item_label"))
                 }
             }
-            .navigationTitle(NSLocalizedString("settings_title", comment: ""))
+            .navigationTitle(String(localized: "settings_title"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(NSLocalizedString("settings_button_cancel", comment: ""), action: { dismiss() })
+                    Button(String(localized: "settings_toolbar_action"), action: { dismiss() })
                 }
             }
         }
+        .preferredColorScheme(.light)
     }
 }

@@ -14,12 +14,12 @@ public struct ActionsView: View {
     
     public var body: some View {
         HStack(spacing: 16) {
-            ActionBoxView(called: "Create PDF", withIcon: "scanner.fill")
+            ActionBoxView(called: String(localized: "home_actions_first"), withIcon: "scanner.fill")
                 .onTapGesture {
                     showDocumentsScanner.toggle()
                 }
             
-            ActionBoxView(called: "Make scan", withIcon: "qrcode.viewfinder")
+            ActionBoxView(called: String(localized: "home_actions_second"), withIcon: "qrcode.viewfinder")
                 .onTapGesture {
                     showScanner.toggle()
                 }
