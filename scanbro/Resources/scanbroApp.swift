@@ -13,9 +13,9 @@ struct scanbroApp: App {
                 IntroductionView()
                     .preferredColorScheme(.dark)
             } else {
-                HomeView()
+                RootView()
                     .modelContainer(for: Document.self)
-                    .preferredColorScheme(.light)
+                    .preferredColorScheme(.dark)
             }
         }
     }

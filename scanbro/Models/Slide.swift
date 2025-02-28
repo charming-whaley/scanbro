@@ -9,6 +9,5 @@ var slides: [Slide] = [
     .init(image: "img 1"),
     .init(image: "img 2"),
     .init(image: "img 3"),
-    .init(image: "img 4"),
-    .init(image: "img 5")
+    .init(image: "img 4")
 ]
