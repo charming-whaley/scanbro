@@ -18,11 +18,6 @@ public struct ActionsView: View {
                 .onTapGesture {
                     showDocumentsScanner.toggle()
                 }
-            
-            ActionBoxView(called: String(localized: "home_actions_second"), withIcon: "qrcode.viewfinder")
-                .onTapGesture {
-                    showScanner.toggle()
-                }
         }
         
     }
@@ -49,6 +44,8 @@ public struct ActionsView: View {
                         .frame(width: 20, height: 20)
                         .foregroundStyle(.white)
                 }
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.trailing)
         }
         .padding([.top, .bottom], 18)
         .padding(.leading)

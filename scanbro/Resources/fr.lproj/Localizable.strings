@@ -8,7 +8,7 @@
 
 "home_header_title" = "Bibliothèque";
 "home_actions_first" = "Faire un scan";
-"home_actions_second" = "Scanner le code QR";
+"home_actions_second" = "Scan QR";
 "home_collection_title" = "Tous";
 "home_collection_item_action" = "Supprimer";
 "home_original_name" = "Nouveau document";

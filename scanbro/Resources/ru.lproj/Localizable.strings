@@ -1,0 +1,47 @@
+// Introduction page localization
+
+"introduction_subtitle" = "Привет";
+"introduction_description" = "Нужно сканировать документы на iPhone? Scan Bro позволяет делать высококачественные сканы документов без проблем";
+"introduction_button" = "Вперёд!";
+
+// Home page localization
+
+"home_header_title" = "Библиотека";
+"home_actions_first" = "Сделать скан";
+"home_actions_second" = "Скан QR";
+"home_collection_title" = "Все";
+"home_collection_item_action" = "Удалить";
+"home_original_name" = "Новый документ";
+"home_alert_title" = "Добавить";
+"home_alert_hint" = "Пишите тут...";
+"home_alert_first_action" = "Сохранить";
+"home_alert_second_action" = "Отменить";
+"home_error_alert_title" = "Ой!!";
+"home_error_alert_description" = "Произошла ошибка во время сканирования документа! Проверьте разрешения или перезапустите приложение";
+"home_error_alert_action" = "Продолжить";
+"home_empty_title" = "Нет сканов";
+"home_empty_description" = "Похоже вы еще не сделали сканов. Нажмита на кнопку Сделать скан сверху";
+
+// Settings page localization
+
+"settings_title" = "Настройки";
+"settings_toolbar_action" = "Закрыть";
+"settings_item_label" = "Разрешения";
+"settings_item_action_label" = "Открыть настройки";
+
+// Scan page localization
+
+"scan_description_pages" = "Страниц";
+"scan_rename_alert_label" = "Переименовать";
+"scan_rename_alert_hint" = "Пишите тут...";
+"scan_rename_alert_action" = "Переименовать";
+"scan_rename_alert_cancel_action" = "Отменить";
+"scan_rename_name" = "Новый документ";
+"scan_menu_save" = "Скачать";
+"scan_menu_rename" = "Переименовать";
+"scan_menu_lock" = "Закблокировать с FaceID";
+"scan_menu_unlock" = "Разблокировать";
+"scan_menu_delete" = "Удалить";
+"faceid_title" = "Документ заблокирован!";
+"faceid_error" = "Проверьте разрешение на FaceID в настройках!";
+"faceid_button" = "Нажмите для разблокировки";

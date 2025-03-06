@@ -7,5 +7,6 @@ struct EmptyCollectionView: View {
             systemImage: "document.on.document.fill",
             description: Text(String(localized: "home_empty_description"))
         )
+        .foregroundStyle(.gray)
     }
 }
